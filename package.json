@@ -1,0 +1,48 @@
+{
+  "name": "freecodechristmas",
+  "version": "0.0.0",
+  "description": "A Discord bot for a Christmas event maybe?",
+  "main": "./prod/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./prod/index.js",
+    "lint": "eslint ./src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhcarrigan/freeCodeChristmas.git"
+  },
+  "keywords": [
+    "discord.js",
+    "discord"
+  ],
+  "author": "Nicholas Carrigan",
+  "license": "Hippocratic-2.1",
+  "bugs": {
+    "url": "https://github.com/nhcarrigan/freeCodeChristmas/issues"
+  },
+  "homepage": "https://github.com/nhcarrigan/freeCodeChristmas#readme",
+  "devDependencies": {
+    "@types/node": "^14.14.6",
+    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/parser": "^4.6.1",
+    "eslint": "^7.12.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.1",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "discord.js": "^12.4.1",
+    "dotenv": "^8.2.0",
+    "mongoose": "^5.10.11"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}
