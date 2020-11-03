@@ -1,9 +1,9 @@
-# Project Name
+# freeCodeChristmas
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-Project Description
+This is a Discord bot I'm putting together to potentially use for a Christmas event.
 
 ## Live Version
 
