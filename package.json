@@ -4,6 +4,7 @@
   "description": "A Discord bot for a Christmas event maybe?",
   "main": "./prod/index.js",
   "scripts": {
+    "prebuild": "rm -rf ./prod",
     "build": "tsc",
     "start": "node ./prod/index.js",
     "lint": "eslint ./src/"
@@ -23,6 +24,7 @@
   },
   "homepage": "https://github.com/nhcarrigan/freeCodeChristmas#readme",
   "devDependencies": {
+    "@types/mongoose": "^5.7.37",
     "@types/node": "^14.14.6",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
