@@ -1,1 +1,35 @@
-console.log("Tada!");
+import { spawn } from "child_process";
+import { Client, TextChannel } from "discord.js";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import { spawner } from "./handlers/spawn";
+
+//config
+dotenv.config();
+const bot = new Client();
+const dbString = process.env.DB_URI || "";
+
+//connect DB
+mongoose.connect(dbString, (err) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.info("Database connected!");
+});
+
+//connect bot
+bot.login(process.env.TOKEN);
+
+bot.on("ready", () => {
+  console.log("Bot Ready!");
+  const targetChannel = bot.channels.cache.find((chan) => {
+    return chan.id === process.env.EVENT_CHANNEL_ID;
+  });
+  if (!targetChannel) {
+    console.error("Event channel not found.");
+    return;
+  }
+  spawner(targetChannel as TextChannel);
+  setInterval(() => spawner(targetChannel as TextChannel), 60000);
+});
