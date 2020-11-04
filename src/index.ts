@@ -1,4 +1,3 @@
-import { spawn } from "child_process";
 import { Client, TextChannel } from "discord.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -46,4 +45,5 @@ bot.on("ready", () => {
 bot.on("message", (message) => {
   //TODO: add inventory logic
   //TODO: add scoreboard logic
+  console.log(message);
 });
