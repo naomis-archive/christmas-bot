@@ -1,7 +1,7 @@
-import { Message, MessageEmbed, TextChannel, User } from "discord.js";
+import { Message, MessageEmbed, TextChannel } from "discord.js";
 import { characters } from "../data/characters";
 
-export const spawner = async (channel: TextChannel) => {
+export const spawner = async (channel: TextChannel): Promise<void> => {
   //TODO: Generate random character.
   const random = characters.length;
 
@@ -9,6 +9,9 @@ export const spawner = async (channel: TextChannel) => {
   // Maybe scale of 1-10, with 10 being rare, 6-9 being uncommon
   // and 1-5 being common?
   const randomItem = 0;
+
+  //console.log to avoid unused declaration
+  console.log(random, randomItem);
 
   //TODO: Refactor to random chance of one of these being correct.
   const goodCommand = "naughty";
@@ -29,6 +32,9 @@ export const spawner = async (channel: TextChannel) => {
         //handle correct response
         //storing winner
         const winner = message.author;
+
+        //console.log to avoid unused declaration
+        console.log(winner);
 
         //TODO: Add database logic here.
 
