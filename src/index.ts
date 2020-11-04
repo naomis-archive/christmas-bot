@@ -43,3 +43,7 @@ bot.on("ready", () => {
 
 //TODO: handle other commands on message event
 // At least inventory and high score commands
+bot.on("message", (message) => {
+  //TODO: add inventory logic
+  //TODO: add scoreboard logic
+});
