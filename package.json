@@ -1,5 +1,5 @@
 {
-  "name": "freecodechristmas",
+  "name": "christmas-bot",
   "version": "0.0.0",
   "description": "A Discord bot for a Christmas event maybe?",
   "main": "./prod/index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nhcarrigan/freeCodeChristmas.git"
+    "url": "git+https://github.com/nhcarrigan/christmas-bot.git"
   },
   "keywords": [
     "discord.js",
@@ -20,9 +20,9 @@
   "author": "Nicholas Carrigan",
   "license": "Hippocratic-2.1",
   "bugs": {
-    "url": "https://github.com/nhcarrigan/freeCodeChristmas/issues"
+    "url": "https://github.com/nhcarrigan/christmas-bot/issues"
   },
-  "homepage": "https://github.com/nhcarrigan/freeCodeChristmas#readme",
+  "homepage": "https://github.com/nhcarrigan/christmas-bot#readme",
   "devDependencies": {
     "@types/mongoose": "^5.7.37",
     "@types/node": "^14.14.6",
