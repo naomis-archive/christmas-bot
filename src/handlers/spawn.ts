@@ -5,14 +5,17 @@ export const spawner = async (channel: TextChannel) => {
   //TODO: Generate random character.
   const random = characters.length;
 
-  //TODO: Refactor to random.
+  //TODO: Select random item to award from character object.
+  // Maybe scale of 1-10, with 10 being rare, 6-9 being uncommon
+  // and 1-5 being common?
+  const randomItem = 0;
+
+  //TODO: Refactor to random chance of one of these being correct.
   const goodCommand = "naughty";
   const badCommand = "nice";
 
-  //declare winner variable at this scope
-  let winner: User | undefined;
-
   //TODO: Change hard coded to random character from above
+  // Use template literals to create the title and description.
   const spawnEmbed = new MessageEmbed()
     .setTitle("Test Spawn!")
     .setDescription("Does this work?")
@@ -24,13 +27,20 @@ export const spawner = async (channel: TextChannel) => {
     (message: Message) => {
       if (message.content.toLowerCase() === goodCommand) {
         //handle correct response
+        //storing winner
+        const winner = message.author;
+
+        //TODO: Add database logic here.
+
+        //TODO: Conditional description - should be different if
+        // winner already has item.
         const winEmbed = new MessageEmbed()
           .setTitle("Success!")
           .setDescription(`They give <@!${message.author.id}> a neat item!`);
         embeddedMessage.edit(winEmbed);
-        winner = message.author;
         return true;
       }
+
       //handle incorrect response
       if (message.content.toLowerCase() === badCommand) {
         const loseEmbed = new MessageEmbed()
@@ -49,18 +59,11 @@ export const spawner = async (channel: TextChannel) => {
     { time: 10000, max: 1 }
   );
 
-  //handle no response
+  //handle no valid response
   if (!collector.first) {
     const timeEmbed = new MessageEmbed()
       .setTitle("Too late!")
       .setDescription("No one helped them so they left!");
     embeddedMessage.edit(timeEmbed);
-  }
-
-  //handle winner
-  if (winner) {
-    // TODO: Database to store items per user
-    // Handle DB call in different file, import here.
-    channel.send(`<@!${winner.id} won!>`);
   }
 };
