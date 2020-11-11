@@ -9,13 +9,21 @@ const bot = new Client();
 const dbString = process.env.DB_URI || "";
 
 //connect DB
-mongoose.connect(dbString, (err) => {
-  if (err) {
-    console.error(err);
-    return;
+mongoose.connect(
+  dbString,
+  {
+    useFindAndModify: false,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  (err) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.info("Database connected!");
   }
-  console.info("Database connected!");
-});
+);
 
 //connect bot
 bot.login(process.env.TOKEN);
