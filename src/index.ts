@@ -1,6 +1,7 @@
 import { Client, TextChannel } from "discord.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import { COMMANDS } from "./commands/_COMMANDS";
 import { spawner } from "./handlers/spawn";
 
 //config
@@ -50,8 +51,15 @@ bot.on("ready", () => {
 
 //TODO: handle other commands on message event
 // At least inventory and high score commands
-bot.on("message", (message) => {
-  //TODO: add inventory logic
+bot.on("message", async (message) => {
   //TODO: add scoreboard logic
-  console.log(message);
+  if (!message.content.startsWith("c!")) {
+    return;
+  }
+  for (const COMMAND of COMMANDS) {
+    if (message.content.startsWith(`c!${COMMAND.name}`)) {
+      await COMMAND.command(message);
+      return;
+    }
+  }
 });
