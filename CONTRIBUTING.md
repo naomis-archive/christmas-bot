@@ -18,6 +18,7 @@ Your next step is to set up the environment variables. Start by copying the `sam
 - `TOKEN` - This is where you paste that token from the page in the previous section.
 - `DB_URI` - This is your MongoDB connection string. If you do not have one, [freeCodeCamp provides instructions](https://www.freecodecamp.org/learn/apis-and-microservices/mongodb-and-mongoose/) for setting one up.
 - `EVENT_CHANNEL_ID` - This is the Discord channel ID where you would like your bot to spawn.
+- `EVENT_ROLE` - This is the *name* of the Discord role to assign to the current winner.
 
 Now run the following commands in your terminal (with the terminal pointed at the root directory for your local instance of this project).
 - `npm install` - This installs all of the dependencies
