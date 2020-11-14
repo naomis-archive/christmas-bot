@@ -26,6 +26,7 @@ const addInventoryItem = async (
         userId: id,
         username: name,
         totalItems: 0,
+        uniqueItems: 0,
         inventory: { rare: [], uncommon: [], common: [] },
       });
     }
@@ -39,6 +40,7 @@ const addInventoryItem = async (
     // If not, give it to them
     if (!hasItem) {
       userData.inventory[rarity].push(item);
+      userData.uniqueItems++;
       userData.markModified("inventory");
     }
 
