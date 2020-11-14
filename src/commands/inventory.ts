@@ -18,7 +18,9 @@ export const inventory: CommandInt = {
       .setDescription("You have no common items!");
     if (common.length) {
       commonEmbed.setDescription(
-        `You have the following common items:\n ${common.join("\n")}`
+        `You have ${common.length} common items:\n\`\`\`md\n* ${common.join(
+          "\n* "
+        )}\n\`\`\``
       );
     }
     await channel.send(commonEmbed);
@@ -26,8 +28,12 @@ export const inventory: CommandInt = {
       .setTitle("Uncommon Items")
       .setDescription("You have no uncommon items!");
     if (uncommon.length) {
-      commonEmbed.setDescription(
-        `You have the following uncommon items:\n ${uncommon.join("\n")}`
+      uncommonEmbed.setDescription(
+        `You have ${
+          uncommon.length
+        } following uncommon items:\n\`\`\`md\n* ${uncommon.join(
+          "\n *"
+        )}\n\`\`\``
       );
     }
     await channel.send(uncommonEmbed);
@@ -35,8 +41,10 @@ export const inventory: CommandInt = {
       .setTitle("Rare Items")
       .setDescription("You have no rare items!");
     if (rare.length) {
-      commonEmbed.setDescription(
-        `You have the following rare items:\n ${rare.join("\n")}`
+      rareEmbed.setDescription(
+        `You have ${rare.length} rare items:\n\`\`\`md\n* ${rare.join(
+          "\n *"
+        )}\n\`\`\``
       );
     }
     await channel.send(rareEmbed);

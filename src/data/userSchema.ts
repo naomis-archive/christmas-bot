@@ -9,6 +9,7 @@ export interface UserInt extends Document {
     common: string[];
   };
   totalItems: number;
+  uniqueItems: number;
 }
 
 const user = new Schema({
@@ -16,6 +17,7 @@ const user = new Schema({
   username: String,
   inventory: Object,
   totalItems: Number,
+  uniqueItems: Number,
 });
 
 export const userModel = model<UserInt>("user", user);
