@@ -17,10 +17,14 @@ export const spawner = async (channel: TextChannel): Promise<void> => {
       ? randomChar.uncomItem
       : randomChar.comItem;
 
+  // variable for rarity
+  const rarity =
+    randomNum >= 95 ? "rare" : randomNum >= 85 ? "uncommon" : "common";
+
   // Randomly select valid command
   const commandFlip = Math.floor(Math.random() * 100);
-  const goodCommand = commandFlip < 50 ? "naughty" : "nice";
-  const badCommand = commandFlip < 50 ? "nice" : "naughty";
+  const goodCommand = commandFlip < 50 ? "c!naughty" : "c!nice";
+  const badCommand = commandFlip < 50 ? "c!nice" : "c!naughty";
 
   //TODO: Change hard coded to random character from above
   // Use template literals to create the title and description.
@@ -76,14 +80,15 @@ export const spawner = async (channel: TextChannel): Promise<void> => {
 
   // Handle correct command received.
   // Add the item to the user's inventory and determine if it was new.
-  const isNewItem = await user.addInventoryItem(
+  const hadItem = await user.addInventoryItem(
     winner.id,
     winner.username,
-    randomItem
+    randomItem,
+    rarity
   );
 
-  const description = isNewItem
-    ? `They give <@!${winner.id}> ${randomItem}!`
+  const description = !hadItem
+    ? `They give <@!${winner.id}> ${randomItem}! This was a ${rarity} item.`
     : `<@!${winner.id}> already had ${randomItem}.`;
 
   const winEmbed = new MessageEmbed()

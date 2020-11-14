@@ -6,46 +6,50 @@ import { userModel } from "../data/userSchema";
  * @param {string} id - The Discord id that will be used to keep track of the user.
  * @param {string} name - The user name belonging to the Discord user.
  * @param {string} item - The item to add to the user's inventory.
+ * @param {string} rarity - The rarity of the item being added.
  * @return {boolean} true if the item added was not previously in the user's
  * inventory; otherwise false.
  */
 const addInventoryItem = async (
   id: string,
   name: string,
-  item: string
+  item: string,
+  rarity: "rare" | "uncommon" | "common"
 ): Promise<boolean> => {
   try {
-    // Find an existing user (or create one) and add the item to the user's
-    // inventory. This call returns the user as it existed before the update.
-    const found = await userModel.findOneAndUpdate(
-      {
-        // Find user with this Discord User ID
-        userId: id,
-      },
-      {
-        // If upserting a new user, set the username.
-        $setOnInsert: {
-          username: name,
-        },
-        // Add the item to the user's inventory.
-        $addToSet: { inventory: item },
-        $inc: { totalItems: 1 },
-      },
-      {
-        upsert: true,
-      }
-    );
+    // Find an existing user
+    let userData = await userModel.findOne({ userId: id });
 
-    // Check if the item was newly added to the user's inventory. Since the user
-    // returned above is in the state prior to the update, if the item exists in
-    // the inventory this user already had the item. If the user was upserted
-    // above, the found user will be null, but this also means the item was
-    // newly added.
-    const itemAdded = !found?.inventory.includes(item);
-    return Promise.resolve(itemAdded);
+    // If user doesn't exist, create one
+    if (!userData) {
+      userData = await userModel.create({
+        userId: id,
+        username: name,
+        totalItems: 0,
+        inventory: { rare: [], uncommon: [], common: [] },
+      });
+    }
+
+    //increment total items
+    userData.totalItems++;
+
+    // Does the user already have the item?
+    const hasItem = userData.inventory[rarity].includes(item);
+
+    // If not, give it to them
+    if (!hasItem) {
+      userData.inventory[rarity].push(item);
+      userData.markModified("inventory");
+    }
+
+    // Save our changes
+    await userData.save();
+
+    // Return true if they had item, false if they did not.
+    return hasItem;
   } catch (err) {
     console.log(err);
-    return Promise.resolve(false);
+    return true;
   }
 };
 
