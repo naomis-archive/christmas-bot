@@ -1,6 +1,7 @@
 import { Message, MessageEmbed, TextChannel } from "discord.js";
 import { characters } from "../data/characters";
 import { user } from "../handlers/user";
+import { handleWinner } from "./winner";
 
 export const spawner = async (channel: TextChannel): Promise<void> => {
   //TODO: Generate random character.
@@ -96,4 +97,5 @@ export const spawner = async (channel: TextChannel): Promise<void> => {
     .setDescription(description);
 
   embeddedMessage.edit(winEmbed);
+  await handleWinner(winningMessage);
 };

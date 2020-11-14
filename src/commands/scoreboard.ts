@@ -26,7 +26,7 @@ export const scoreboard: CommandInt = {
       .setDescription(`\`\`\`md\n${scoreDesc}\`\`\``);
     await message.channel.send(scoreEmbed);
     await message.channel.send(
-      `You are in place ${userPosition} with ${user.uniqueItems} items!`
+      `You are in place ${userPosition + 1} with ${user.uniqueItems} items!`
     );
   },
 };
