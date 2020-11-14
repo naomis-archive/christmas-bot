@@ -6,7 +6,7 @@ import { userModel } from "../data/userSchema";
  * Assigns the role to the current leader
  * @param {Message} message Discord message
  */
-export const handleWinner = async (message: Message) => {
+export const handleWinner = async (message: Message): Promise<void> => {
   if (!process.env.EVENT_ROLE) {
     console.error("Role not set.");
     return;
