@@ -54,7 +54,8 @@ export const spawner = async (channel: TextChannel): Promise<void> => {
       .setTitle("Too late!")
       .setDescription("No one helped them so they left!");
 
-    embeddedMessage.edit(timeEmbed);
+    await embeddedMessage.edit(timeEmbed);
+    await embeddedMessage.delete({ timeout: 60000 });
     return;
   }
 
@@ -75,7 +76,8 @@ export const spawner = async (channel: TextChannel): Promise<void> => {
         `<@!${winner.id}> used the wrong command and now Santa is sad.`
       );
 
-    embeddedMessage.edit(loseEmbed);
+    await embeddedMessage.edit(loseEmbed);
+    await embeddedMessage.delete({ timeout: 60000 });
     return;
   }
 
@@ -96,6 +98,7 @@ export const spawner = async (channel: TextChannel): Promise<void> => {
     .setTitle("Success!")
     .setDescription(description);
 
-  embeddedMessage.edit(winEmbed);
+  await embeddedMessage.edit(winEmbed);
   await handleWinner(winningMessage);
+  await embeddedMessage.delete({ timeout: 60000 });
 };

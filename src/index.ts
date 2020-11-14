@@ -46,7 +46,7 @@ bot.on("ready", () => {
 
   //set interval for spawning
   //TODO: make timer an env config?
-  setInterval(() => spawner(targetChannel as TextChannel), 60000);
+  setInterval(() => spawner(targetChannel as TextChannel), 600000);
 });
 
 //TODO: handle other commands on message event
