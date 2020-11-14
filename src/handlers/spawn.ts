@@ -4,25 +4,29 @@ import { user } from "../handlers/user";
 
 export const spawner = async (channel: TextChannel): Promise<void> => {
   //TODO: Generate random character.
-  const random = characters.length;
+  const randomChar = characters[Math.floor(Math.random() * characters.length)];
 
   //TODO: Select random item to award from character object.
   // Maybe scale of 1-10, with 10 being rare, 6-9 being uncommon
   // and 1-5 being common?
-  const randomItem = "Test Item #" + Math.round(Math.random() * 3).toString();
+  const randomNum = Math.floor(Math.random() * 100);
+  const randomItem =
+    randomNum >= 95
+      ? randomChar.rareItem
+      : randomNum >= 85
+      ? randomChar.uncomItem
+      : randomChar.comItem;
 
-  //console.log to avoid unused declaration
-  console.log(random, randomItem);
-
-  //TODO: Refactor to random chance of one of these being correct.
-  const goodCommand = "naughty";
-  const badCommand = "nice";
+  // Randomly select valid command
+  const commandFlip = Math.floor(Math.random() * 100);
+  const goodCommand = commandFlip < 50 ? "naughty" : "nice";
+  const badCommand = commandFlip < 50 ? "nice" : "naughty";
 
   //TODO: Change hard coded to random character from above
   // Use template literals to create the title and description.
   const spawnEmbed = new MessageEmbed()
-    .setTitle("Test Spawn!")
-    .setDescription("Does this work?")
+    .setTitle(randomChar.name)
+    .setDescription("TODO")
     .setFooter(`Reward them with \`${goodCommand}\`.`);
   const embeddedMessage = await channel.send(spawnEmbed);
 
@@ -39,7 +43,7 @@ export const spawner = async (channel: TextChannel): Promise<void> => {
   // Get the first valid message received.
   const winningMessage = collector.first();
 
-  if (winningMessage === undefined) {
+  if (!winningMessage) {
     // Handle no valid message received.
     const timeEmbed = new MessageEmbed()
       .setTitle("Too late!")

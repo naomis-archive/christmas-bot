@@ -29,6 +29,7 @@ const addInventoryItem = async (
         },
         // Add the item to the user's inventory.
         $addToSet: { inventory: item },
+        $inc: { totalItems: 1 },
       },
       {
         upsert: true,
