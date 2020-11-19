@@ -1,6 +1,7 @@
-import { MessageEmbed } from "discord.js";
+import { MessageEmbed, MessageReaction } from "discord.js";
 import { userModel } from "../data/userSchema";
 import { CommandInt } from "../interfaces/CommandInt";
+import { inventoryPaginator } from "../handlers/inventoryPaginator";
 
 export const inventory: CommandInt = {
   name: "inventory",
@@ -13,40 +14,57 @@ export const inventory: CommandInt = {
       return;
     }
     const { common, uncommon, rare } = userData.inventory;
-    const commonEmbed = new MessageEmbed()
-      .setTitle("Common Items")
-      .setDescription("You have no common items!");
-    if (common.length) {
-      commonEmbed.setDescription(
-        `You have ${common.length} common items:\n\`\`\`md\n* ${common.join(
-          "\n* "
-        )}\n\`\`\``
-      );
-    }
-    await channel.send(commonEmbed);
-    const uncommonEmbed = new MessageEmbed()
-      .setTitle("Uncommon Items")
-      .setDescription("You have no uncommon items!");
-    if (uncommon.length) {
-      uncommonEmbed.setDescription(
-        `You have ${
-          uncommon.length
-        } following uncommon items:\n\`\`\`md\n* ${uncommon.join(
-          "\n *"
-        )}\n\`\`\``
-      );
-    }
-    await channel.send(uncommonEmbed);
-    const rareEmbed = new MessageEmbed()
-      .setTitle("Rare Items")
-      .setDescription("You have no rare items!");
-    if (rare.length) {
-      rareEmbed.setDescription(
-        `You have ${rare.length} rare items:\n\`\`\`md\n* ${rare.join(
-          "\n *"
-        )}\n\`\`\``
-      );
-    }
-    await channel.send(rareEmbed);
+    const itemsPerPage = 10;
+
+    const paginator = inventoryPaginator(
+      [common, uncommon, rare],
+      ["common", "uncommon", "rare"],
+      itemsPerPage
+    );
+
+    const page = paginator.pageForward();
+    const inventoryEmbed = new MessageEmbed()
+      .setTitle(`Inventory for @${author.username}`)
+      .setDescription(page.content)
+      .setFooter(page.footer);
+    const inventoryMessage = await channel.send(inventoryEmbed);
+
+    // Add reactions to be used for paging through inventory.
+    const emojiList = ["◀", "▶"];
+    const reacts = emojiList.map((emoji) => inventoryMessage.react(emoji));
+    await Promise.all(reacts);
+
+    // Filter used by collector so we only handle the paging reactions.
+    const emojiFilter = (reaction: MessageReaction) => {
+      return emojiList.includes(reaction.emoji.name);
+    };
+
+    // Create a collector to monitor for reactions on the inventory message.
+    const collector = await inventoryMessage.createReactionCollector(
+      emojiFilter,
+      {
+        time: 60000,
+        dispose: true,
+      }
+    );
+
+    // Helper function which pages based upon the reaction pressed and redisplays the inventory list.
+    const emojiPager = (reaction: MessageReaction) => {
+      const page =
+        reaction.emoji.name === "▶"
+          ? paginator.pageForward()
+          : paginator.pageBackward();
+
+      const inventoryEmbed = new MessageEmbed()
+        .setTitle(`Inventory for @${author.username}`)
+        .setDescription(page.content)
+        .setFooter(page.footer);
+
+      inventoryMessage.edit(inventoryEmbed);
+    };
+
+    // Wire up the paging helper function to the collectors collect & remove events.
+    collector.on("collect", emojiPager);
+    collector.on("remove", emojiPager);
   },
 };
