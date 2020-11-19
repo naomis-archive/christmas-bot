@@ -1,9 +1,14 @@
 # Christmas Bot
+
+```diff
+- NOTE: This project is on hold. Contributions are welcome, though we encourage you to check out our active projects instead.
+```
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-This is a Discord bot I'm putting together to potentially use for a Christmas event.
+This is a Discord bot that was being built for a Christmas event - the event has been cancelled and this bot is tabled for now.
 
 ## Live Version
 

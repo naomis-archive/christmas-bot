@@ -1,5 +1,9 @@
 # Contributing
 
+```diff
+- NOTE: This project is on hold. Contributions are welcome, though we encourage you to check out our active projects instead.
+```
+
 Please ensure all pull requests and contributions comply with the [Developer Certificate of Origin](https://developercertificate.org/).
 
 ## Setting Up Discord Bot
